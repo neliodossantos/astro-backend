@@ -30,6 +30,6 @@ router.route("/auth/user/:id").get( checkToken,(req,res) => userController.getUs
 router.route('/auth/user').get(checkToken, (req,res) => userController.returnUserLogado(req,res));
 
 router.route('/pedido').post((req,res) => pedidoController.create(req,res));
-
+router.route('/users').get((req,res) => userController.getUsers(req,res));
 module.exports = router;
 
