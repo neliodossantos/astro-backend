@@ -12,8 +12,8 @@ const productController = {
     create : async(req,res) => {
         try {
             const {nome , descricao , preco ,categoryId ,userId} = req.body;
-             const categoria = await Category.findById(categoryId);
-             if(!categoryId) res.status(404).send("Erro nao encontrou a categoria");
+             const findCategoryId =await Category.findById(categoryId);
+             if(!findCategoryId) res.status(404).send("Erro nao encontrou a categoria");
              const { path } = req.file;
              const response = await ProductModel.create({
                 nome: nome,
