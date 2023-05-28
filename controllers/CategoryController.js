@@ -3,11 +3,6 @@ const { Category: CategoryModel, Category } =  require('../models/Category');
 const categoryController = {
     create : async(req,res) => {
         try {
-            const  findCategory = await CategoryModel.findOne(req.body.nome);
-            if(findCategory){
-                res.status(400).json({msg:"Categoria já existe"});
-                return;
-            }
             const response = await CategoryModel.create(req.body);
             res.status(201).json({response,msg:"Categoria criada com sucesso!"});
         } catch (error){
