@@ -11,16 +11,17 @@ const productController = {
     },
     create : async(req,res) => {
         try {
-             const category = await Category.findById(req.body.category);
-             if(!category) res.status(404).send("Erro nao encontrou a categoria");
+            const {nome , descricao , preco ,categoryId ,userId} = req.body;
+             const categoria = await Category.findById(req.body.category);
+             if(!categoria) res.status(404).send("Erro nao encontrou a categoria");
              const { path } = req.file;
              const response = await ProductModel.create({
-                nome: req.body.nome,
-                descricao : req.body.descricao,
-                preco: req.body.preco,
-                category : req.body.category,
+                nome: nome,
+                descricao : descricao,
+                preco: preco,
+                category : categoryId,
                 image : path,
-                userId : req.body.idUser,
+                userId : userId,
             });
             res.status(201).json({response,msg:"Produto criado com sucesso!"});
         } catch (error){
