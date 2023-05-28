@@ -12,15 +12,16 @@ const ProductSchema = new Schema({
     },
     preco : {
         type : Number,
-        default: 0
+        default: 0,
+        require: true
     },
     category : {
          type : mongoose.Schema.Types.ObjectId,
-         ref : 'Category'
+         ref : 'Category',
+         required : true
     },
     image : {
-        type: String,
-        required  : true
+        type: String
     },
     owner: {
         type : mongoose.Schema.Types.ObjectId,
