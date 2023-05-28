@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 async function main()
 {
     const url = "mongodb+srv://neliodossantos15:neliodossantos15@cluster0.hvhxgye.mongodb.net/?authSource=astro&authMechanism=SCRAM-SHA-1"
@@ -7,9 +8,7 @@ async function main()
     useNewUrlParser: true,
     useUnifiedTopology: true
     };
-
     mongoose.set("strictQuery",true);
-    
     try{
         await mongoose.
         connect(url,options);

@@ -12,6 +12,7 @@ const PedidoSchema = new Schema({
     total : {
         type: Number
     },
+    comentario: { type: String },
     status: { type: String, required: true, enum: ['Em espera', 'Entregado'], default: 'Em espera' }
 },{timestamps:true});
 
