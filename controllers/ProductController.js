@@ -5,7 +5,21 @@ const upload = require("../config/multer");
 const { response } = require("express");
 const productController = {
     index: async(req,res) => {
-        const response = await ProductModel.find().populate('category');
+        const {categoria, sort , page , limit } = req.query;
+        const query =  await ProductModel.find().populate('category');
+        if(categoria){
+            query.where({categoria});
+        }
+        if(sort){
+            query.where({sort});
+        }
+        if(page && limit){
+            const pageNumber = parseInt(page, 10);
+            limitNumber = parseInt(limit, 10);
+            const skip = (pageNumber - 1) * limitNumber;
+            query.skip(skip).limit(limitNumber);
+        }
+        const response = await query.exec();
         if (!response) res.status(404).json({response , msg: "Erro ao trazer os dados"});
         res.status(200).json({response,msg:"Sucesso ao trazer o dados"});
     },
