@@ -1,5 +1,6 @@
 const { Category } = require("../models/Category");
 const { Product : ProductModel } = require("../models/Product");
+const mongoose = require("mongoose");
 const path = require("path");
 const upload = require("../config/multer");
 const { response } = require("express");
