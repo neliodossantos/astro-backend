@@ -12,14 +12,14 @@ const productController = {
     create : async(req,res) => {
         try {
             const {nome , descricao , preco ,categoryId ,userId} = req.body;
-             const categoria = await Category.findById(req.body.category);
-             if(!categoria) res.status(404).send("Erro nao encontrou a categoria");
+             const categoria = await Category.findById(categoryId);
+             if(!categoryId) res.status(404).send("Erro nao encontrou a categoria");
              const { path } = req.file;
              const response = await ProductModel.create({
                 nome: nome,
                 descricao : descricao,
                 preco: preco,
-                category : mongoose.Types.ObjectId(result.categoria),
+                category : mongoose.Types.ObjectId(result.categoryId),
                 image : path,
                 userId : userId,
             });
