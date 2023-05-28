@@ -19,7 +19,7 @@ const productController = {
                 nome: nome,
                 descricao : descricao,
                 preco: preco,
-                category : categoryId,
+                category : mongoose.Types.ObjectId(result.categoria),
                 image : path,
                 userId : userId,
             });
