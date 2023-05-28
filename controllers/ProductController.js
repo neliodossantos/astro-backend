@@ -5,7 +5,7 @@ const upload = require("../config/multer");
 const { response } = require("express");
 const productController = {
     index: async(req,res) => {
-        const response = await ProductModel.find();
+        const response = await ProductModel.find().populate('category');
         if (!response) res.status(404).json({response , msg: "Erro ao trazer os dados"});
         res.status(200).json({response,msg:"Sucesso ao trazer o dados"});
     },
