@@ -19,7 +19,7 @@ const productController = {
                 descricao : req.body.descricao,
                 preco: req.body.preco,
                 category : req.body.category,
-                image : path,
+                // image : path,
                 userId : req.body.idUser,
             });
             res.status(201).json({response,msg:"Produto criado com sucesso!"});
