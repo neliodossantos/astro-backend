@@ -1,31 +1,35 @@
-const { Category: CategoryModel} = require("../models/Category");
+const { Category : CategoryModel } = require("../models/Category");
 const { Product : ProductModel } = require("../models/Product");
 const path = require("path");
 const upload = require("../config/multer");
-const { response } = require("express");
 const productController = {
     index: async(req,res) => {
-        const {categoria, sort , page , limit } = req.query;
-        const query =  await ProductModel.find().populate('category');
-        if(categoria){
-            query.where({categoria});
+        try{
+        const { category, sortBy, sortOrder, page, limit } = req.query;
+        const filter = category ? { category: category } : {};
+        const sortOptions = {};
+        if (sortBy && sortOrder) {
+          sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
         }
-        if(sort){
-            query.where({sort});
-        }
-        if(page && limit){
-            const pageNumber = parseInt(page, 10);
-            limitNumber = parseInt(limit, 10);
-            const skip = (pageNumber - 1) * limitNumber;
-            query.skip(skip).limit(limitNumber);
-        }
-        const response = await query.exec();
-        if (!response) res.status(404).json({response , msg: "Erro ao trazer os dados"});
-        res.status(200).json({response,msg:"Sucesso ao trazer o dados"});
+        // Pagination
+        const skip = (page - 1) * limit;
+        const totalProducts = await ProductModel.countDocuments(filter);
+        const totalPages = Math.ceil(totalProducts / limit);
+    
+        const products = await ProductModel.find(filter)
+          .sort(sortOptions)
+          .skip(skip)
+          .limit(limit)
+          .populate('category');
+        res.json({ products, totalPages });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
     },
     create : async(req,res) => {
         try {
-             const category = await CategoryModel.findById(req.body.category);
+             const category = await Category.findById(req.body.category);
              if(!category) res.status(404).send("Erro nao encontrou a categoria");
              const { path } = req.file;
              const response = await ProductModel.create({
