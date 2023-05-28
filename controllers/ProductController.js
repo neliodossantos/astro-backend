@@ -6,7 +6,7 @@ const { response } = require("express");
 const productController = {
     index: async(req,res) => {
         const response = await ProductModel.find().populate('category').exec(() =>{
-            if(err){
+            if(err,response){
                 console.log(err);
                 res.status(404).json({response , msg: "Erro ao trazer os dados"})
             }else
