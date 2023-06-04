@@ -1,3 +1,4 @@
+const express = require('express');
 const router = require('express').Router();
 const upload = require('../config/multer');
 const categoryController = require('../controllers/CategoryController');
@@ -11,6 +12,7 @@ const verifAdmin = require('../middleware/verifAdmin');
 const userController = require('../controllers/UserController');
 const pedidoController = require('../controllers/PedidoController');
 
+router.route('/uploads', express.static('uploads'));
 
 router.route("/category").get((req,res) => categoryController.index(req,res));
 router.route("/category").post((req,res) => categoryController.create(req,res));
