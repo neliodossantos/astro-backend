@@ -4,6 +4,7 @@ const routes = require('./routes/router');
 
 
 // Rota para acessar as imagens de upload
+app.use('/uploads', express.static('uploads'));
 
 // forma de ler json
 app.use(express.urlencoded({extended:true,}),)
