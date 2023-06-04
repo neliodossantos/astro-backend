@@ -10,7 +10,6 @@ const conn = require('./database/conn');
 conn();
 
 const seedDatabase = require('./database/seeds/initial');
-
 seedDatabase();
 
 app.use('/api',routes);

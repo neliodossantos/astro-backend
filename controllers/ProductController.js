@@ -20,7 +20,9 @@ const productController = {
           .sort(sortOptions)
           .skip(skip)
           .limit(limit)
-          .populate('category');
+          .populate('category')
+          .populate('subcategory');
+
         res.json({ products, totalPages });
       } catch (error) {
         console.log(error);
@@ -29,7 +31,7 @@ const productController = {
     },
     create : async(req,res) => {
         try {
-             const category = await Category.findById(req.body.category);
+             const category = await CategoryModel.findById(req.body.category);
              if(!category) res.status(404).send("Erro nao encontrou a categoria");
              const { path } = req.file;
              const response = await ProductModel.create({
@@ -37,8 +39,9 @@ const productController = {
                 descricao : req.body.descricao,
                 preco: req.body.preco,
                 category : req.body.category,
+                subcategory : req.body.subcategory,
                 image : path,
-                userId : req.body.idUser,
+                owner : req.body.owner,
             });
             res.status(201).json({response,msg:"Produto criado com sucesso!"});
         } catch (error){
