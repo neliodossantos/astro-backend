@@ -24,7 +24,7 @@ const categoryController = {
     {
         try {
             const service = await CategoryModel.find();
-            res.json(service);
+            res.status(200).json(service);
         } catch (error) {
             console.log("erro:"+error);
         }

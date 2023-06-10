@@ -9,7 +9,7 @@ const productController = {
         if (!response) res.status(404).json({response , msg: "Erro ao trazer os dados"});
         res.status(200).json({response,msg:"Sucesso ao trazer o dados"});
     },
-    create : async(req,res) => {
+    create : async (req,res) => {
         try {
              const category = await Category.findById(req.body.category);
              if(!category) res.status(404).send("Erro nao encontrou a categoria");
@@ -26,6 +26,8 @@ const productController = {
             res.status(201).json({response,msg:"Produto criado com sucesso!"});
         } catch (error){
             console.log(error);
+            res.status(500).json({msg:"Erro no Servidor!"});
+
         }
     },
     update : async (req,res)=> {
@@ -41,7 +43,7 @@ const productController = {
                 image,
                 owner
             }, { new: true });
-            res.json(product);
+            res.status(200).json(product);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao actualizar' });
             console.log(error);

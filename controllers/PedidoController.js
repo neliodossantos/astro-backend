@@ -1,4 +1,4 @@
-const { Pedido : PedidoModel } = require("../models/Cart");
+const { Pedido : PedidoModel } = require("../models/Pedido");
 const { PedidoSchema } = require("../models/Pedido");
 
 const PedidoController = {
@@ -29,9 +29,25 @@ const PedidoController = {
     update : async (req,res) => {
         try{
             const {mesaId,productId,quantity}  = req.body;
-            const update_cart = await CartModel.findOneAndUpdate({mesaId, productId},{quantity:quantity});
+            const findProduct = await PedidoModel.findById(productId);
+            if(findProduct){
+                const response = await PedidoModel.findByIdAndUpdate(mesaId,{quantity:quantity});
+                res.json(response);
+            }else{
+                res.json({error:"Nao encontrou o produto"});
+            }
         } catch (e) {
             console.log(error);
+        }
+    },
+    fecharConta : async (req,res) =>{
+        const idPedido = req.params.id;
+        const getId = await PedidoModel.findById(idPedido);
+        if(!getId){
+            res.status(404).json({msg: 'Nao encontrou o ID'});
+        }else{
+            const response = await PedidoModel.findByIdAndUpdate(getId,{historico : true});
+            res.send(response);
         }
     }
 }
