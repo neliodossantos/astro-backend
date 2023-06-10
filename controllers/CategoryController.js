@@ -1,14 +1,20 @@
 const { Category: CategoryModel, Category } =  require('../models/Category');
+const moment = require("moment");
 
 const categoryController = {
     create : async(req,res) => {
         try {
+            const owner = req.body.userId;
             const nome = req.body;
             const findCategory = await CategoryModel.findOne(nome);
             if(findCategory){
                 return res.status(400).json({msg:"Categoria já existe"});
             }
-            const response = await CategoryModel.create(req.body);
+            const response = await CategoryModel.create({
+                nome : req.body.nome,
+                owner : owner
+
+            });
             res.status(201).json({response,msg:"Categoria criada com sucesso!"});
         } catch (error){
             console.log(error);
@@ -24,22 +30,21 @@ const categoryController = {
         }
     },
     get : async (req,res) => {
+        try{
+            const id = req.params.id;
+            const getId = CategoryModel.findById(id);
 
-        // try{
-        //     const id = req.params.id;
-        //     const getId = CategoryModel.findById(id);
+            if(!getId){
+                res.status(404).json({msg:"Serviço não encontrado"});
+            }
 
-        //     if(!getId){
-        //         res.status(404).json({msg:"Serviço não encontrado"});
-        //     }
-
-        //     const response = CategoryModel.findOne(id);
-        //     res.status(201).json({response,msg:"Encontrado com Sucesso"});        
+            const response = CategoryModel.findOne(id);
+            res.status(201).json({response,msg:"Encontrado com Sucesso"});
 
 
-        // } catch(erro){
-        //     console.log("erro:"+erro);
-        // }
+        } catch(erro){
+            console.log("erro:"+erro);
+        }
     },
     delete : async (req,res) =>{
         const deleteCategory = await CategoryModel.findByIdAndDelete(req.params.id);
