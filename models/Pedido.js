@@ -1,18 +1,11 @@
 const mongoose = require('mongoose');
-
 const {Schema} = mongoose;
 
-const cartItemSchema = new mongoose.Schema({
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-    quantity: { type: Number, default: 1 }
-  });
 const PedidoSchema = new Schema({
-    idMesa : { type: mongoose.Schema.Types.ObjectId , ref: 'Mesa' },
-    items: [cartItemSchema],
-    total : {
-        type: Number
-    },
-    comentario: { type: String },
+    mesaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mesa' },
+    productId : {type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
+    quantity : {type:Number , Default:1},
+    totalPrice : {type:Number},
     status: { type: String, required: true, enum: ['Em espera', 'Entregado'], default: 'Em espera' }
 },{timestamps:true});
 

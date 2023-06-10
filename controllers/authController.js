@@ -7,10 +7,10 @@ const authController = {
     register: async (req,res) => {
       try {
             const {nome,email,senha, role} = req.body;
-            const searchNome = await UserModel.findOne({ nome});
-            const searchEmail = await UserModel.findOne({ email });
+            const existingNome = await UserModel.findOne({ nome});
+            const existingEmail = await UserModel.findOne({ email });
             
-            if (searchEmail || searchNome) {
+            if (existingNome || existingEmail) {
             return res.status(400).json({ error: 'Usuário já existe' });
             }     
             const salt = await bcrypt.genSalt(12);
@@ -34,8 +34,7 @@ const authController = {
             const user = await UserModel.findOne({ email });
             if (!user) {
               return res.status(401).json({ error: 'Usuário ou senha inválidos' });
-            }
-    
+            }   
             const passwordMatch = await bcrypt.compare(senha, user.senha);
             if (!passwordMatch) {
               return res.status(401).json({ error: 'Usuário ou senha inválidos' });

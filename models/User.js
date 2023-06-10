@@ -13,7 +13,7 @@ const UserSchema = new Schema({
         unique : true
     },
     senha : {
-        type : String,
+        type : String
     },
     // nif : {
     //     type : Number,

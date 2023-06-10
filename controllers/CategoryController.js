@@ -1,24 +1,24 @@
 const { Category: CategoryModel, Category } =  require('../models/Category');
-const moment = require("moment");
 
 const categoryController = {
     create : async(req,res) => {
-        try {
-            const owner = req.body.userId;
-            const nome = req.body;
-            const findCategory = await CategoryModel.findOne(nome);
-            if(findCategory){
-                return res.status(400).json({msg:"Categoria já existe"});
-            }
-            const response = await CategoryModel.create({
-                nome : req.body.nome,
-                owner : owner
-
-            });
-            res.status(201).json({response,msg:"Categoria criada com sucesso!"});
-        } catch (error){
-            console.log(error);
-        }
+            const {nome} = req.body;
+            await CategoryModel.findOne({nome}).then((existentCategory) => {
+                if (existentCategory) {
+                    return res.status(404).json({msg: "A Categoria já existe"});
+                }
+                const newCategory = new CategoryModel({
+                    nome: nome
+                });
+                newCategory.save().then(() => {
+                    res.json(newCategory);
+                }).catch((erro) => {
+                    console.log(erro);
+                    res.status(404).json({msg: "Erro ao cadastrar a Categoria"});
+                })
+            }).catch((erro)=>{
+                res.status(404).json({msg: "Erro ao buscar a Categoria"});
+            })
     },
     index : async (req,res) =>
     {
@@ -30,21 +30,21 @@ const categoryController = {
         }
     },
     get : async (req,res) => {
-        try{
-            const id = req.params.id;
-            const getId = CategoryModel.findById(id);
+        // try{
+        //     const id = req.params.id;
+        //     const getId = CategoryModel.findById(id);
 
-            if(!getId){
-                res.status(404).json({msg:"Serviço não encontrado"});
-            }
+        //     if(!getId){
+        //         res.status(404).json({msg:"Serviço não encontrado"});
+        //     }
 
-            const response = CategoryModel.findOne(id);
-            res.status(201).json({response,msg:"Encontrado com Sucesso"});
+        //     const response = CategoryModel.findOne(id);
+        //     res.status(201).json({response,msg:"Encontrado com Sucesso"});        
 
 
-        } catch(erro){
-            console.log("erro:"+erro);
-        }
+        // } catch(erro){
+        //     console.log("erro:"+erro);
+        // }
     },
     delete : async (req,res) =>{
         const deleteCategory = await CategoryModel.findByIdAndDelete(req.params.id);
@@ -77,7 +77,6 @@ const categoryController = {
         res.send("Categoria actualizada com sucesso");
         // try {
         //     const getId = await CategoryModel.findById(id);
-
         //     if(!getId){
         //     res.status(404).json({msg: "Serviço não encontrado"});
         //     }
@@ -99,4 +98,3 @@ const categoryController = {
 };
 
 module.exports = categoryController;
-

@@ -5,9 +5,8 @@ const User = {
     getUser: async (req, res) => {
         const id = req.params.id;
         const user = await UserModel.findById(id,'-senha');
-
         if(!user){
-            res.status(404).json({msg: 'User not found',error});
+            res.status(404).json({msg: 'Usuário não encontrado',error});
             return;
         }
         res.status(200).json({user});
@@ -43,7 +42,10 @@ const User = {
             console.log(error);
             res.json("Erro ao actualizado os dados");
         }
+    },
+    getRestaurantUsers : async (req,res) =>{
+        const users = await UserModel.find({role : 'restaurant'});
+        res.json(users);
     }
-
 }
 module.exports = User;

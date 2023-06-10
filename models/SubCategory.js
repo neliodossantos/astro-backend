@@ -8,7 +8,13 @@ const SubCategorySchema =  new Schema({
     },
     category : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Category'
+        ref : 'Category',
+        required : true
+    },
+    owner : {
+        type: mongoose.Schema.Types.ObjectId,
+        refer : 'User',
+        required : true
     }
 },
     {timestamps:true}

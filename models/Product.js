@@ -20,7 +20,7 @@ const ProductSchema = new Schema({
     },
     subcategory : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'SubCategory'
+        ref : 'Subcategory'
     },
     image : {
         type: String,

@@ -1,39 +1,39 @@
-//  const { Pedido : PedidoModel} = require('../models/Pedido');
-//  const { Cart : CartModel } = require('../models/Cart');
+const { Pedido : PedidoModel } = require("../models/Cart");
+const { PedidoSchema } = require("../models/Pedido");
 
-//  const pedidoController = {
-//     index: async (req, res) => {
+const PedidoController = {
+    index: async (req, res ) =>{
+        const data = await PedidoModel.find();
+        if(!data){
+            res.send("Falha ao trazer os dados");
+        }
+        res.status(201).json({msg:"Sucesso ao trazer os dados"},data);
+    },
+    create : async (req,res) => {
+        try{
+            const status = PedidoSchema.path('status').enumValues;
+            const {mesaId,productId,quantity} = req.body;
+            const data = {
+                mesaId,
+                productId,
+                quantity,
+                totalPrice,
+                status : status[0]
+            }
+            const response = await CartModel.create(data);
+            res.status(201).json(response);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    update : async (req,res) => {
+        try{
+            const {mesaId,productId,quantity}  = req.body;
+            const update_cart = await CartModel.findOneAndUpdate({mesaId, productId},{quantity:quantity});
+        } catch (e) {
+            console.log(error);
+        }
+    }
+}
 
-//     },
-//     create : async (req, res) => {
-//         try{
-//         // const objCart = [
-//         // {
-//         //     idMesa : "646deb71d3e134be93ff4a99",
-//         //     productId : "646deb935467975450df7111",
-//         //     quantity : 1
-//         // },
-//         // {
-//         //     idMesa : "646deb71d3e134be93ff4a99",
-//         //     productId : "646deb325a4f2614544ebd12",
-//         //     quantity : 2
-//         // }
-//         // ];
-//         // const idMesa = "646deb71d3e134be93ff4a99";
-//         // const data = {
-//         //     idMesa : idMesa,
-//         //     items : objCart,
-//         //     total : 1234
-//         // }
-//         const response = await PedidoModel.create(data);
-//         res.status(201).json({response,msg:"Pedido criado com sucesso!"});
-
-//         } catch(e) {
-//             console.log(e);
-//         }
-//     }
-// }
-
-// module.exports = pedidoController;
-
-
+module.exports = PedidoController;
