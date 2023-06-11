@@ -1,15 +1,26 @@
 const { Category } = require("../models/Category");
 const { Product : ProductModel } = require("../models/Product");
-const path = require("path");
+const { Mesa : MesaModel } = require("../models/Mesa");
 const upload = require("../config/multer");
-const { response } = require("express");
 const productController = {
+    pegarProdutos : async(req,res) => {
+       const onwer = req.params.onwer;
+       const getMesa = await MesaModel.findById(req.params.mesaId);
+       const mesaName = getMesa.nome;
+       await MesaModel.findById(req.params.mesaId).then(async() =>{
+       const response = await ProductModel.find({owner: onwer});
+       if (!response) res.status(404).json({msg: "Erro ao trazer os dados"});
+       res.status(200).json(response);
+       }).catch(()=>{
+           res.send({msg:"Erro nao encontrou id"});
+       });
+   },
     index: async(req,res) => {
         const response = await ProductModel.find();
         if (!response) res.status(404).json({response , msg: "Erro ao trazer os dados"});
         res.status(200).json({response,msg:"Sucesso ao trazer o dados"});
     },
-    create : async (req,res) => {
+    create : async(req,res) => {
         try {
              const category = await Category.findById(req.body.category);
              if(!category) res.status(404).send("Erro nao encontrou a categoria");
@@ -26,8 +37,6 @@ const productController = {
             res.status(201).json({response,msg:"Produto criado com sucesso!"});
         } catch (error){
             console.log(error);
-            res.status(500).json({msg:"Erro no Servidor!"});
-
         }
     },
     update : async (req,res)=> {
@@ -43,7 +52,7 @@ const productController = {
                 image,
                 owner
             }, { new: true });
-            res.status(200).json(product);
+            res.json(product);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao actualizar' });
             console.log(error);

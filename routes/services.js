@@ -11,29 +11,28 @@ const userController = require('../controllers/UserController');
 const pedidoController = require('../controllers/PedidoController');
 
 // Rotas de Categorias -> Para Admin (Cadastrar , Ver , Update , Delelete)
-router.route("/category").get(verifAdmin,(req,res) => categoryController.index(req,res));
-router.route("/category").post(verifAdmin,(req,res) => categoryController.create(req,res));
-router.route("/category/:id").delete(verifAdmin,(req,res) => categoryController.delete(req,res));
-router.route("/category/:id").put(verifAdmin,(req,res) => categoryController.update(req,res));
+router.route("/category").get((req,res) => categoryController.index(req,res));
+router.route("/category").post((req,res) => categoryController.create(req,res));
+router.route("/category/:id").delete((req,res) => categoryController.delete(req,res));
+router.route("/category/:id").put((req,res) => categoryController.update(req,res));
 
 // Rota para um restaurant ver as suas categorias
 router.route(":restaurantId/category/:idCategory").get((req,res) => categoryController.getRestaurantCategory(req,res));
 router.route(":restaurantId/subcategory/:idSubcategory").get((req,res) => subcategoryController.getRestaurantSubcategory(req,res));
 
 
-router.route("/subcategory").get(verifAdmin,(req,res) => subcategoryController.index(req,res));
-router.route("/subcategory").post(verifAdmin,(req,res) => subcategoryController.create(req,res));
-router.route("/subcategory/:id").delete(verifAdmin,(req,res) => subcategoryController.delete(req,res));
-router.route("/subcategory/:id").put(verifAdmin,(req,res) => subcategoryController.update(req,res));
+
+router.route("/subcategory").get((req,res) => subcategoryController.index(req,res));
+router.route("/subcategory").post((req,res) => subcategoryController.create(req,res));
+router.route("/subcategory/:id").delete((req,res) => subcategoryController.delete(req,res));
+router.route("/subcategory/:id").put((req,res) => subcategoryController.update(req,res));
 
 
-
-router.route("/products").get((req,res)=> productController.index(req,res));
 router.route("/products").post(upload.single("image"),(req,res) => productController.create(req,res));
 router.route("/products/:id").put(upload.single("image"),(req,res) => productController.update(req,res));
 router.route("/products/:id").delete((req,res) => productController.delete(req,res));
 
-router.route("/products/:restaurantId/:idMesa").get((req,res)=> productController.index(req,res));
+router.route("/products/owner/:ownerId").get((req,res)=> productController.pegarProdutos(req,res));
 
 
 router.route("/auth/register").post((req,res) => authController.register(req,res));

@@ -1,21 +1,15 @@
-const { Category: CategoryModel, Category } =  require('../models/Category');
+const { Mesa: MesaModel } =  require('../models/Mesa');
 const moment = require("moment");
 
-const categoryController = {
+const mesaController = {
     create : async(req,res) => {
+        const {nome , owner} = req.body;
         try {
-            const owner = req.body.userId;
-            const nome = req.body;
-            const findCategory = await CategoryModel.findOne(nome);
-            if(findCategory){
-                return res.status(400).json({msg:"Categoria já existe"});
-            }
-            const response = await CategoryModel.create({
-                nome : req.body.nome,
+            const response = await MesaModel.create({
+                nome : nome,
                 owner : owner
-
             });
-            res.status(201).json({response,msg:"Categoria criada com sucesso!"});
+            res.status(201).json({response,msg:"Mesa criada com sucesso!"});
         } catch (error){
             console.log(error);
         }
@@ -23,7 +17,7 @@ const categoryController = {
     index : async (req,res) =>
     {
         try {
-            const service = await CategoryModel.find();
+            const service = await MesaModel.find();
             res.json(service);
         } catch (error) {
             console.log("erro:"+error);
@@ -32,13 +26,13 @@ const categoryController = {
     get : async (req,res) => {
         try{
             const id = req.params.id;
-            const getId = CategoryModel.findById(id);
+            const getId = MesaModel.findById(id);
 
             if(!getId){
                 res.status(404).json({msg:"Serviço não encontrado"});
             }
 
-            const response = CategoryModel.findOne(id);
+            const response = MesaModel.findOne(id);
             res.status(201).json({response,msg:"Encontrado com Sucesso"});
 
 
@@ -47,7 +41,7 @@ const categoryController = {
         }
     },
     delete : async (req,res) =>{
-        const deleteCategory = await CategoryModel.findByIdAndDelete(req.params.id);
+        const deleteCategory = await MesaModel.findByIdAndDelete(req.params.id);
         if(!deleteCategory){
             res.status(404).send("A categoria não pode ser apagada");
         }
@@ -68,7 +62,7 @@ const categoryController = {
     },
     update : async (req,res) =>{
         //const id = req.params.id;
-        const updateCategory = await CategoryModel.findByIdAndUpdate(req.params.id,{
+        const updateCategory = await MesaModel.findByIdAndUpdate(req.params.id,{
             nome:req.body.nome,
         });
         if(!updateCategory){
@@ -98,5 +92,5 @@ const categoryController = {
     }
 };
 
-module.exports = categoryController;
+module.exports = mesaController;
 

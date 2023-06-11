@@ -6,11 +6,7 @@ const PedidoSchema = new Schema({
     productId : {type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
     quantity : {type:Number , Default:1},
     totalPrice : {type:Number},
-    status: { type: String, required: true, enum: ['Em espera', 'Entregado'], default: 'Em espera' },
-    historico : {
-        type: Boolean,
-        default: false
-    }
+    status: { type: String, required: true, enum: ['Em espera', 'Entregado'], default: 'Em espera' }
 },{timestamps:true});
 
 const Pedido = mongoose.model('Pedido',PedidoSchema);
