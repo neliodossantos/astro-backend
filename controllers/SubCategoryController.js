@@ -1,14 +1,13 @@
 const { SubCategory: SubCategoryModel, SubCategory } =  require('../models/SubCategory');
-
 const SubCategoryController = {
     create : async(req,res) => {
         try {
-            const nome = req.body;
-            const findCategory = await SubCategoryModel.findOne(nome);
-            if(findCategory){
-                return res.status(400).json({msg:"SubCategoria já existe"});
-            }
-            const response = await SubCategoryModel.create(req.body);
+            const {nome , category, userId} = req.body;
+            const response = await SubCategoryModel.create({
+                nome: nome,
+                category: category,
+                userId: userId
+            });
             res.status(201).json({response,msg:"SubCategoria criada com sucesso!"});
         } catch (error){
             console.log(error);

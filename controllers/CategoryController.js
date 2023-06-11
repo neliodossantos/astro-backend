@@ -4,16 +4,10 @@ const moment = require("moment");
 const categoryController = {
     create : async(req,res) => {
         try {
-            const owner = req.body.userId;
-            const nome = req.body;
-            const findCategory = await CategoryModel.findOne(nome);
-            if(findCategory){
-                return res.status(400).json({msg:"Categoria já existe"});
-            }
+            const {nome , userId} = req.body;
             const response = await CategoryModel.create({
-                nome : req.body.nome,
-                owner : owner
-
+                nome,
+                userId
             });
             res.status(201).json({response,msg:"Categoria criada com sucesso!"});
         } catch (error){

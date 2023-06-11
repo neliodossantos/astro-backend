@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
 const {Schema}  = mongoose;
 
 const categorySchema =  new Schema({
@@ -7,9 +6,10 @@ const categorySchema =  new Schema({
         type: String,
         require: true
     },
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        refer: 'User'
+    userId: {
+        type: Schema.Types.ObjectId,
+        refer: 'User',
+        require: true
     }
 }
 ,{timestamps:true}

@@ -16,19 +16,22 @@ const ProductSchema = new Schema({
     },
     category : {
          type : mongoose.Schema.Types.ObjectId,
-         ref : 'Category'
+         ref : 'Category',
+         required : true
     },
     subcategory : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Subcategory'
+        ref : 'Subcategory',
+        required : true
     },
     image : {
         type: String,
         required  : true
     },
-    owner: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User'
+    userId: {
+        type : Schema.Types.ObjectId,
+        ref : 'User',
+        required : true
    },
 }, {timestamps: true});
 
