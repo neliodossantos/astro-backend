@@ -1,12 +1,14 @@
 const db = require('../conn.js');
 const mongoose = require('mongoose');
 const { Category: CategoryModel } =  require('../../models/Category');
-const {Mesa: MesaModel} = require('../../models/Mesa')
+const { SubCategory: SubCategoryModel } =  require('../../models/SubCategory');
+
 const {User : UserModel} = require('../../models/User');
+
 const seedDatabase = async () => {   
     try {
         const contextCategory = await CategoryModel.find().count();
-        const contextMesa = await MesaModel.find().count();
+        const contextSubCategory = await SubCategoryModel.find().count();
         const contextUser = await UserModel.find().count();
         if(!contextCategory) {
             const categorias =  [
@@ -15,12 +17,16 @@ const seedDatabase = async () => {
             ];
             await CategoryModel.create(categorias);
         }
-        if(!contextMesa) {
-            const mesas =  [
-                { nome : 'Mesa1' },
-                { nome : 'Mesa2'}
+
+        if(!contextSubCategory) {
+            const subcategorias =  [
+                { 
+                    nome : 'Bebidas',
+                    category : '651651174c483691604e3c6d'
+                }
+                
             ];
-            await MesaModel.create(mesas);
+            await SubCategoryModel.create(subcategorias);
         }
         if(!contextUser){
             const users = [

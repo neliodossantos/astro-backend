@@ -33,9 +33,15 @@ const ProductSchema = new Schema({
         ref : 'User',
         required : true
    },
+    numPeca: {
+        type : Number,
+        required : true
+    },
+    carros: [{type:mongoose.Schema.Types.ObjectId, ref: 'Car'}]
 }, {timestamps: true});
 
 const Product = mongoose.model("Product",ProductSchema);
+
 module.exports = {
     Product,
     ProductSchema

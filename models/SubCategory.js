@@ -10,11 +10,6 @@ const SubCategorySchema =  new Schema({
         type : Schema.Types.ObjectId,
         ref : 'Category',
         required : true
-    },
-    userId : {
-        type: Schema.Types.ObjectId,
-        refer : 'User',
-        required : true
     }
 },
     {timestamps:true}
