@@ -55,11 +55,10 @@ const SubCategoryController = {
     },
     update : async (req,res) =>{
         const id = req.params.id;
-        const { nome , owner } = req.body;
+        const { nome } = req.body;
         const updateCategory = await SubCategoryModel.findByIdAndUpdate(req.params.id,
         {
-            nome:nome,
-            owner:owner
+            nome:nome
         });
         if(!updateCategory){
             res.status(404).send("A Subcategoria não pode ser actualizada!");
