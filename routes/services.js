@@ -15,7 +15,7 @@ router.route("/category/:id").delete((req,res) => categoryController.delete(req,
 router.route("/category/:id").put((req,res) => categoryController.update(req,res));
 
 router.route("/subcategory").get((req,res) => subcategoryController.index(req,res));
-router.route("/subcategory/:id").get((req,res) => subcategoryController.get(req,res));
+router.route("/subcategory/:id").get((req,res) => subcategoryController.listar(req,res));
 router.route("/subcategory").post((req,res) => subcategoryController.create(req,res));
 router.route("/subcategory/:id").delete((req,res) => subcategoryController.delete(req,res));
 router.route("/subcategory/:id").put((req,res) => subcategoryController.update(req,res));
