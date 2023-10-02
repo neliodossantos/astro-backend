@@ -5,8 +5,7 @@ const SubCategoryController = {
             const {nome , category, userId} = req.body;
             const response = await SubCategoryModel.create({
                 nome: nome,
-                category: category,
-                userId: userId
+                category: category
             });
             res.status(201).json({response,msg:"SubCategoria criada com sucesso!"});
         } catch (error){
@@ -66,18 +65,6 @@ const SubCategoryController = {
             res.status(404).send("A Subcategoria não pode ser actualizada!");
         }
         res.send("Subcategoria actualizada com sucesso");
-    },
-    getRestarantSubcategory : async (req,res) => {
-        try
-        {
-            const restaurantId = req.params;
-            const response = await SubCategoryModel.find({owner:restaurantId});
-            res.status(201).json({response});
-        } catch (err){
-            console.log(err);
-            res.status(404).json({msg:"Erro ao trazer os dados"});
-        }
-
     }
 };
 module.exports = SubCategoryController;
