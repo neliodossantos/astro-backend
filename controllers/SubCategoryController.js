@@ -21,18 +21,16 @@ const SubCategoryController = {
             console.log("erro:"+error);
         }
     },
-    get : async (req,res) => {
-        try{
-            const id = req.params.id;
-            const getId = SubCategoryModel.findById(id);
-            if(!getId){
-                res.status(404).json({msg:"Serviço não encontrado"});
-            }
-            const response = SubCategoryModel.findOne(id);
-            res.status(201).json({response,msg:"Encontrado com Sucesso"});
-        } catch(erro){
-            console.log("erro:"+erro);
+    listar: async (req, res) => {
+        const categoryId = req.params.id; // Pega o valor do parâmetro 'id' da URL
+        console.log(categoryId);
+        const result = await SubCategoryModel.find({ category: categoryId });
+        //const result = await SubCategoryModel.findById({'category' : req.params.id});
+        if(!result){
+            res.status(404).json({msg: 'Categoria não encontrado'});
+            return;
         }
+        res.status(200).json(result);
     },
     delete : async (req,res) =>{
         const deleteCategory = await SubCategoryModel.findByIdAndDelete(req.params.id);
