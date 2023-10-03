@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const routes = require('./routes/router');
+const cors = require('cors');
 // forma de ler json
 app.use(express.urlencoded({extended:true,}),)
 app.use(express.json());
