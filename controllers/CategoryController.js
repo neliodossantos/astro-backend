@@ -4,11 +4,10 @@ const moment = require("moment");
 const categoryController = {
     create : async(req,res) => {
         try {
-            const {nome} = req.body;
             const response = await CategoryModel.create({
-                nome
+                nome : req.body
             });
-            res.status(201).json({response,msg:"Categoria criada com sucesso!"});
+            res.status(201).json(response,"Categoria criada com sucesso!");
         } catch (error){
             console.log(error);
         }
