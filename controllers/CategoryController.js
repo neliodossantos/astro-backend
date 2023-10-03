@@ -5,6 +5,7 @@ const categoryController = {
     create : async(req,res) => {
         try {
             const {nome} = req.body;
+            console.log(nome);
             const response = await CategoryModel.create({
                 nome
             });
