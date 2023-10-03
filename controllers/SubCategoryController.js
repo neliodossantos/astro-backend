@@ -21,7 +21,7 @@ const SubCategoryController = {
             console.log("erro:"+error);
         }
     },
-    listar: async (req, res) => {
+    get: async (req, res) => {
         const categoryId = req.params.id; // Pega o valor do parâmetro 'id' da URL
         console.log(categoryId);
         const result = await SubCategoryModel.find({ category: categoryId });
