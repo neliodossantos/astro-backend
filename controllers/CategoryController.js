@@ -4,7 +4,7 @@ const moment = require("moment");
 const categoryController = {
     create : async(req,res) => {
         try {
-            const nome = req.body;
+            const {nome} = req.body;
             const response = await CategoryModel.create({
                 nome
             });
