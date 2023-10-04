@@ -22,22 +22,8 @@ const ProductSchema = new Schema({
     subcategory : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Subcategory',
-        required : true
     },
-    image : {
-        type: String,
-        required  : true
-    },
-    userId: {
-        type : Schema.Types.ObjectId,
-        ref : 'User',
-        required : true
-   },
-    numPeca: {
-        type : Number,
-        required : true
-    },
-    carros: [{type:mongoose.Schema.Types.ObjectId, ref: 'Car'}]
+    images : [String]
 }, {timestamps: true});
 
 const Product = mongoose.model("Product",ProductSchema);

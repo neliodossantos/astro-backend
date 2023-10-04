@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const upload = require('../config/multer');
+
 const categoryController = require('../controllers/CategoryController');
 const subcategoryController = require('../controllers/SubCategoryController');
 const productController = require('../controllers/ProductController');
@@ -20,9 +21,10 @@ router.route("/subcategory").post((req,res) => subcategoryController.create(req,
 router.route("/subcategory/:id").delete((req,res) => subcategoryController.delete(req,res));
 router.route("/subcategory/:id").put((req,res) => subcategoryController.update(req,res));
 
-router.route("/products/").get((req,res) => productController.index(req,res));
-router.route("/products").post(upload.single("image"),(req,res) => productController.create(req,res));
-router.route("/products/:id").put(upload.single("image"),(req,res) => productController.update(req,res));
+router.route("/products").get((req,res) => productController.index(req,res));
+router.route("/products").post(upload.array('images', 5),(req,res) => productController.create(req,res));
+router.route("/products/:id").get((req,res) => productController.get(req,res));
+router.route("/products/:id").put(upload.array('images',5),(req,res) => productController.update(req,res));
 router.route("/products/:id").delete((req,res) => productController.delete(req,res));
 
 router.route("/auth/register").post((req,res) => authController.register(req,res));
